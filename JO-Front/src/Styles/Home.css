@@ -1,0 +1,80 @@
+.flags{
+    width: 400px;
+    height: auto;
+    margin-right: 160px;
+}
+
+.paris{
+    width: 600px;
+    height: auto;
+    margin-left: 40px;
+}
+
+.ground{
+    max-width: 150vw;
+    height:100vh;
+    display: flex;/* permettre de modifier l'emplacment des elements enfants */
+    
+       
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.drapeau{
+    margin-top: 10px;
+    height: 59px;
+    width: 179px;
+    margin-bottom: 50px;
+}
+
+.logo{
+    margin-top: 30px;
+    margin-bottom: 10px;
+    height: 250px;
+    width: 350px;
+}
+
+.search {
+        width: 100%;
+        margin-top: 40px;
+        height: 45px;
+        border: 2px solid #D4C37D;
+        padding: 15px;
+        border-radius: 40px 40px 40px 40px;
+        outline: none;
+        color: #9DBFAF;
+        size: 60px;
+        margin-bottom: 20px;
+      }
+
+.buttons{
+    margin-top: 20px;
+    margin-bottom: 100px;
+    display: grid;
+    grid-auto-flow: column; /* Arrange items in rows */
+    grid-template-columns: repeat(auto-fill, minmax(50px, 1fr)); /* Adjust column width as needed */
+    gap: 10px; /* Adjust the gap between items */
+}
+
+.tube{
+    width: 2px;
+    height: 36px;
+}
+
+.communication{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    
+}
+.social{
+    width: 40px;
+    height:40px;
+    margin: 10px;
+}

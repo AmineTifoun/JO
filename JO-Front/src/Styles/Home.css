@@ -78,3 +78,28 @@
     height:40px;
     margin: 10px;
 }
+
+
+@media screen and ( min-width: 500px) {
+        .paris{
+            width: 25%;
+            height: auto;
+            margin-left: 15%;
+        }
+        
+        .flags{
+            width: 25%;
+            height: auto;
+            margin-right: 15%;
+        }
+    
+        .drapeau{
+            margin-top: 10px;
+            height: 59px;
+            width: 25%;
+            margin-bottom: 50px;
+        }
+        
+        
+        
+}

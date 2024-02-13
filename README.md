@@ -3,6 +3,6 @@
                               npm run dev
 
 
-*********************** Front : cd jo-Back
+*********************** Front : cd jo-front
                                 npm install 
                                 npm start 

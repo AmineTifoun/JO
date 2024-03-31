@@ -1,25 +1,26 @@
 .flags{
     width: 400px;
     height: auto;
-    margin-right: 160px;
+    margin-right: 0%;
 }
 
 .paris{
-    width: 600px;
+    width: 610px;
     height: auto;
-    margin-left: 40px;
+    margin-left: 0%;
 }
 
 .ground{
     max-width: 150vw;
-    
+    height:100vh;
     display: flex;/* permettre de modifier l'emplacment des elements enfants */
     
        
 }
 
 .container{
-    width: 1000px;
+
+    width: 1900px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -85,13 +86,13 @@
         .paris{
             width: 25%;
             height: auto;
-            margin-left: 15%;
+            margin-left: 0%;
         }
         
         .flags{
             width: 25%;
             height: auto;
-            margin-right: 15%;
+            margin-right: 5%;
         }
     
         .drapeau{
@@ -104,5 +105,15 @@
         
         
 }
+/* Importation via Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap');
+
+/* Utilisation dans le CSS */
 
 
+
+.Title{
+    text-decoration: underline;
+    color: #D4C37D;
+    font-family: 'Oswald', sans-serif;
+}

@@ -1,6 +1,6 @@
 import './App.css';
 import Home from './Pages/Home';
-import Filter from './Pages/Filter'
+import Filter from './Pages/FilterPage'
 import { BrowserRouter as Router , Routes , Route} from "react-router-dom";
 
 function App() {

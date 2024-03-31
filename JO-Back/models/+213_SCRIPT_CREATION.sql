@@ -4,7 +4,7 @@ CREATE DATABASE JO_PARIS_2024;
 USE JO_PARIS_2024;
 
 CREATE TABLE Sport (
-    sport_ID INT(6) PRIMARY KEY, -- Identifiant du sport
+    sport_ID INT(6) AUTO_INCREMENT PRIMARY KEY, -- Identifiant du sport
     nom_sport VARCHAR(40) NOT NULL, -- Nom du sport
     nom_sport_eng VARCHAR(40) NOT NULL, -- Nom du sport en anglais
     isIndividual INT(1), -- Indique si c'est un sport individuel (0 faux, 1 vrai)
@@ -13,7 +13,7 @@ CREATE TABLE Sport (
 );
 
 CREATE TABLE Athletes (
-    ath_ID INT(6) PRIMARY KEY, -- Identifiant de l'athlète
+    ath_ID INT(6) AUTO_INCREMENT PRIMARY KEY, -- Identifiant de l'athlète
     nom_ath VARCHAR(20) NOT NULL, -- Nom de l'athlète
     prenom_ath VARCHAR(20) NOT NULL, -- Prénom de l'athlète
     date_naissance DATE, -- Date de naissance de l'athlète
@@ -22,27 +22,27 @@ CREATE TABLE Athletes (
 );
 
 CREATE TABLE Record (
-    record_ID INT(6) PRIMARY KEY, -- Identifiant du record
+    record_ID INT(6) AUTO_INCREMENT  PRIMARY KEY, -- Identifiant du record
     value VARCHAR(20), -- Valeur du record
     detenteur INT(6), -- Identifiant de l'athlète détenteur du record
     FOREIGN KEY (detenteur) REFERENCES Athletes(ath_ID) -- Clé étrangère vers la table Athletes
 );
 
 CREATE TABLE Competition (
-    comp_ID INT(6) PRIMARY KEY, -- Identifiant de la compétition
+    comp_ID INT(6) AUTO_INCREMENT PRIMARY KEY, -- Identifiant de la compétition
     nom_comp VARCHAR(60) NOT NULL, -- Nom de la compétition
     categorie_comp VARCHAR(60), -- Catégorie de la compétition
     step_comp VARCHAR(10) NOT NULL -- Étape de la compétition
 );
 
 CREATE TABLE Calendrier (
-    agenda_ID INT(6) PRIMARY KEY, -- Identifiant de l'agenda
+    agenda_ID INT(6) AUTO_INCREMENT PRIMARY KEY, -- Identifiant de l'agenda
     date_deroulement DATE, -- Date de déroulement de la compétition
     heure_deroulement TIME -- Heure de déroulement de la compétition
 );
 
 CREATE TABLE Sites (
-    sites_ID INT(6) PRIMARY KEY, -- Identifiant du site
+    sites_ID INT(6) AUTO_INCREMENT PRIMARY KEY, -- Identifiant du site
     nom_site VARCHAR(70) NOT NULL, -- Nom du site
     date_realisation DATE, -- Date de réalisation du site
     adresse VARCHAR(70) NOT NULL, -- Adresse du site
@@ -59,7 +59,7 @@ CREATE TABLE Pays (
 );
 
 CREATE TABLE Transport (
-    arret_ID INT(6) PRIMARY KEY, -- Identifiant de l'arrêt de transport
+    arret_ID INT(6) AUTO_INCREMENT PRIMARY KEY, -- Identifiant de l'arrêt de transport
     nom_arret VARCHAR(70) NOT NULL, -- Nom de l'arrêt de transport
     type_transport VARCHAR(20), -- Type de transport
     gps_arret VARCHAR(255), -- Coordonnées GPS de l'arrêt de transport

@@ -19,11 +19,11 @@ export default function Filter() {
         <form className="form">
           <input type="text" className="input" placeholder="Nom Sport (Fr)"></input>
           <input type="text" className="input" placeholder="Nom Sport (ENG)"></input>
-          <label>
+          <label className="label">
             <input type="checkbox" className="check" value="Individuel" />
             Individuel
           </label>
-          <label>
+          <label className="label">
             <input type="checkbox" className="check" value="Collectif  ." />
             Collectif           ..
           </label>

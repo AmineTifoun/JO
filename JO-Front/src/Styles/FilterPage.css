@@ -18,7 +18,7 @@
        
 }
 
-.container{
+.containers{
 
     width: 1900px;
     display: flex;
@@ -95,8 +95,10 @@
 
 
 
-.Title{
+.titre{
+    margin-top: 5px;
     text-decoration: underline;
     color: #D4C37D;
     font-family: 'Oswald', sans-serif;
+    font-size: 1.5em
 }

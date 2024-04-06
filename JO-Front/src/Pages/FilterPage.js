@@ -17,7 +17,7 @@ export default function FiltrePage(){
             <img src={flags} alt='Flags' className='flags'></img>
             <div className="container">
                 <img src={drapeau} alt='Flags' className='drapeau'></img>
-                <h1 className="Title">Filtre De Recherche</h1>
+                <h1 className="titre">Filtre De Recherche</h1>
                 <Filter></Filter>
                 <div className='communication'>
                     <a href='https://www.facebook.com/actujeuxolympiques/?locale=fr_FR'>

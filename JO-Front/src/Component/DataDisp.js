@@ -30,7 +30,7 @@ export default function DataDisp({ Data, type }) {
     return (
         <>
             {type === 'ath' && (
-                <div className="Container">
+                <div className="back">
                     <div className="TextContainer">
                     <p><span className="style">Nom :</span> {Data.nom_ath}</p>
                     <p><span className="style">Prénom :</span> {Data.prenom_ath}</p>
@@ -46,7 +46,7 @@ export default function DataDisp({ Data, type }) {
             )}
 
             {type === 'sprt' && (
-                <div className="Container sprt">
+                <div className="back sprt">
                     <img  class ="profilePic" src={photo} alt="Logo Sport" width={120} />
                     <div className="TextContainer sport">
                         <p><span className="style">Nom Fr:</span> {Data.nom_sport}</p>
@@ -58,6 +58,14 @@ export default function DataDisp({ Data, type }) {
                     <button className="sprt-btn"> Competitions</button>
                     </div>
                 </div>
+            )}
+
+            { type === 'site' && (
+                <div></div>
+
+
+
+
             )}
         </>
     );

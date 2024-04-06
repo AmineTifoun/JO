@@ -4,7 +4,7 @@ import './../Styles/Filter.css'
 export default function Filter() {
   
   return (
-    <div className="Container">
+    <div className="Grnd">
       <div className="filtre">
         <h4 className="Titre">Athletes</h4>
         <form className="form">

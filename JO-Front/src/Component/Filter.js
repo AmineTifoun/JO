@@ -1,7 +1,8 @@
 import React from "react";
-import './../../Styles/Filter.css'
+import './../Styles/Filter.css'
 
 export default function Filter() {
+  
   return (
     <div className="Container">
       <div className="filtre">

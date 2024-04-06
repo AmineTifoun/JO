@@ -1,0 +1,80 @@
+.Container{
+    margin: 10px 10px 10px 10px ;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+    height: auto;
+    width: 500px;
+    background-color: beige;
+    border-radius: 20px;
+    padding: 5px;
+
+}
+
+.style{
+    text-decoration: underline;
+    color: #D4C37D;
+    font-family: 'Oswald', sans-serif;
+}
+
+.TextContainer{
+    margin-right: 40px;
+}
+
+.profilePic{
+    height: auto;
+    display: inline-block;
+    border : 2px solid #5f4e0d;
+    border-radius: 50%;
+}
+
+.img-con{
+    display: flex;
+    flex-direction: column;
+}
+
+.label{
+    margin-left: 13px;
+}
+
+
+.sprt-btn{
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left:10px;
+    background-color: #fff;
+    border: 1px solid #d5d9d9;
+    border-radius: 8px;
+    box-shadow: rgba(213, 217, 217, .5) 0 2px 5px 0;
+    box-sizing: border-box;
+    color: #0f1111;
+    cursor: pointer;
+    display: inline-block;
+    font-family: "Amazon Ember",sans-serif;
+    font-size: 13px;
+    line-height: 29px;
+    padding: 0 10px 0 11px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: middle;
+    width: 100px;
+  }
+    
+.btn-cont{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.sport{
+    margin: 10px 50px 10px 60px;
+    padding: 10px;
+}
+
+
+.sprt{
+    display: flex;
+    flex-direction: row;
+}

@@ -1,7 +1,7 @@
 import React from "react";
 import flags from './../Tools/flags.png'
 import paris from './../Tools/paris.png';
-import Filter from './Component/Filter';
+import Filter from './../Component/Filter';
 import './../Styles/FilterPage.css';
 import drapeau from './../Tools/drapeau.png'
 import logo from './../Tools/logo.png'

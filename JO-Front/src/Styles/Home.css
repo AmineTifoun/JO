@@ -40,7 +40,7 @@
 }
 
 .search {
-        width: 100%;
+        width: 50%;
         margin-top: 40px;
         height: 45px;
         border: 2px solid #D4C37D;
@@ -49,7 +49,7 @@
         outline: none;
         color: #9DBFAF;
         size: 60px;
-        margin-bottom: 20px;
+        margin-bottom: 60px;
       }
 
 .buttons{

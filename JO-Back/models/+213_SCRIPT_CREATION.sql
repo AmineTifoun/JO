@@ -18,7 +18,7 @@ CREATE TABLE Athletes (
     prenom_ath VARCHAR(20) NOT NULL, -- Prénom de l'athlète
     date_naissance DATE, -- Date de naissance de l'athlète
     nb_medailles INT(4), -- Nombre de médailles de l'athlète
-    img VARCHAR(255) -- URL de l'image de l'athlète
+    img VARCHAR(1000) -- URL de l'image de l'athlète
 );
 
 CREATE TABLE Record (

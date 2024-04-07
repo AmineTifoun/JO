@@ -3,7 +3,7 @@ import flags from './../Tools/flags.png'
 import paris from './../Tools/paris.png';
 import Filter from './../Component/Filter';
 import './../Styles/FilterPage.css';
-import drapeau from './../Tools/drapeau.png'
+import drapeau from './../Tools/drapeau+jo.png'
 import logo from './../Tools/logo.png'
 import facebook from './../Tools/facebook.png'
 import instagram from './../Tools/instagram.png'

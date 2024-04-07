@@ -2,12 +2,14 @@
     margin: 10px 10px 10px 10px ;
     box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
     height: auto;
-    width: 500px;
+    width:fit-content;
     background-color: beige;
-    border-radius: 20px;
-    padding: 5px;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
 
 }
+
 
 .style{
     text-decoration: underline;
@@ -45,7 +47,7 @@
     border-radius: 8px;
     box-shadow: rgba(213, 217, 217, .5) 0 2px 5px 0;
     box-sizing: border-box;
-    color: #0f1111;
+    color: #D4C37D;
     cursor: pointer;
     display: inline-block;
     font-family: "Amazon Ember",sans-serif;
@@ -61,7 +63,15 @@
     vertical-align: middle;
     width: 100px;
   }
-    
+  .sprt-btn:hover {
+    background-color: #f7fafa;
+  }
+  
+  .sprt-btn:focus {
+    border-color: #D4C37D;
+    box-shadow: rgba(213, 217, 217, .5) 0 2px 5px 0;
+    outline: 0;
+  }
 .btn-cont{
     margin-top: 20px;
     display: flex;
@@ -77,4 +87,31 @@
 .sprt{
     display: flex;
     flex-direction: row;
+}
+
+
+.site{
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+    width: max-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: max-content;
+}
+
+.trsprt-btn{
+    width: 200px;
+    margin-bottom: 20px;
+
+}
+
+.sites{
+    margin: 10px 50px 10px 60px;
+    padding: 10px;
+}
+
+.sitePic{
+    width: 500px;
+    border-radius: 15px;
+
 }

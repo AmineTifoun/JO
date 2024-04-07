@@ -51,7 +51,7 @@ const ResultPage = () => {
                         break;
                     case 'sprt':
                         try{
-                            await axios.post('http://localhost:3500/sprt', tuples[currentIndex].ath_ID);
+                            await axios.post('http://localhost:3500/sprt',{ ath_ID : tuples[currentIndex].ath_ID});
                              }catch(err) {
                                 console.error(err);
                             }                        

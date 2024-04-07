@@ -19,22 +19,33 @@
 
 .TextContainer{
     margin-right: 40px;
+    height: auto;
 }
 
 .profilePic{
-    height: auto;
     display: inline-block;
     border : 2px solid #5f4e0d;
     border-radius: 50%;
 }
 
+.ath{
+    margin: 10px 10px 10px 10px ;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+    height: auto;
+    width:fit-content;
+    background-color: beige;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    width: 500px;
+}
 .img-con{
     display: flex;
     flex-direction: column;
 }
 
-.label{
-    margin-left: 13px;
+.label2{
+    margin-left: 60px;
 }
 
 
@@ -67,6 +78,11 @@
     background-color: #f7fafa;
   }
   
+  .use{
+    height: 220px;
+    padding-top: 40px ;
+    padding-left: 20px; 
+  }
   .sprt-btn:focus {
     border-color: #D4C37D;
     box-shadow: rgba(213, 217, 217, .5) 0 2px 5px 0;
@@ -85,8 +101,15 @@
 
 
 .sprt{
+    margin: 10px 10px 10px 10px ;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+    height: auto;
+    width:fit-content;
+    background-color: beige;
+    padding: 10px;
     display: flex;
     flex-direction: row;
+
 }
 
 

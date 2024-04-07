@@ -14,10 +14,11 @@ CREATE TABLE Sport (
 
 CREATE TABLE Athletes (
     ath_ID INT(6) AUTO_INCREMENT PRIMARY KEY, -- Identifiant de l'athlète
-    nom_ath VARCHAR(20) NOT NULL, -- Nom de l'athlète
-    prenom_ath VARCHAR(20) NOT NULL, -- Prénom de l'athlète
+    nom_ath VARCHAR(100) NOT NULL, -- Nom de l'athlète
+    prenom_ath VARCHAR(100) NOT NULL, -- Prénom de l'athlète
     date_naissance DATE, -- Date de naissance de l'athlète
     nb_medailles INT(4), -- Nombre de médailles de l'athlète
+    nationalite VARCHAR(100),
     img VARCHAR(1000) -- URL de l'image de l'athlète
 );
 
@@ -72,6 +73,7 @@ CREATE TABLE participer (
     athletes_id INT(6), -- Identifiant de l'athlète
     FOREIGN KEY (id_sport) REFERENCES Sport(sport_ID), -- Clé étrangère vers la table Sport
     FOREIGN KEY (athletes_id) REFERENCES Athletes(ath_ID) -- Clé étrangère vers la table Athletes
+    ON DELETE CASCADE;
 );
 
 CREATE TABLE Programmer (
@@ -79,6 +81,7 @@ CREATE TABLE Programmer (
     compete_id INT(6), -- Identifiant de la compétition
     FOREIGN KEY (agenda_id) REFERENCES Calendrier(agenda_ID), -- Clé étrangère vers la table Calendrier
     FOREIGN KEY (compete_id) REFERENCES Competition(comp_ID) -- Clé étrangère vers la table Competition
+    ON DELETE CASCADE;
 );
 
 CREATE TABLE derouler (
@@ -86,6 +89,7 @@ CREATE TABLE derouler (
     id_site INT(6), -- Identifiant du site
     FOREIGN KEY (id_comp) REFERENCES Competition(comp_ID), -- Clé étrangère vers la table Competition
     FOREIGN KEY (id_site) REFERENCES Sites(sites_ID) -- Clé étrangère vers la table Sites
+    ON DELETE CASCADE;
 );
 
 CREATE TABLE abriter (
@@ -93,6 +97,7 @@ CREATE TABLE abriter (
     id_compet INT(6), -- Identifiant de la compétition
     FOREIGN KEY (id_discipline) REFERENCES Sport(sport_ID), -- Clé étrangère vers la table DisciplineSportive
     FOREIGN KEY (id_compet) REFERENCES Competition(comp_ID) -- Clé étrangère vers la table Competition
+    ON DELETE CASCADE;
 );
 
 CREATE TABLE concurrencer (
@@ -100,6 +105,7 @@ CREATE TABLE concurrencer (
     code_pays VARCHAR(5), -- Code du pays
     FOREIGN KEY (id_athletes) REFERENCES Athletes(ath_ID), -- Clé étrangère vers la table Athletes
     FOREIGN KEY (code_pays) REFERENCES Pays(code) -- Clé étrangère vers la table Pays
+    ON DELETE CASCADE;
 );
 
 CREATE TABLE desservir (
@@ -107,4 +113,5 @@ CREATE TABLE desservir (
     id_transport INT(6), -- Identifiant du transport
     FOREIGN KEY (id_sites) REFERENCES Sites(sites_ID), -- Clé étrangère vers la table Sites
     FOREIGN KEY (id_transport) REFERENCES Transport(arret_ID) -- Clé étrangère vers la table Transport
+    ON DELETE CASCADE;
 );

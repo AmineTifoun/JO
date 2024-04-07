@@ -2,7 +2,6 @@ const express = require("express");
 const mysql = require("mysql2");
 const cors = require('cors');
 var server = express();
-
 server.use(cors());
 server.use(express.json());
 server.use(express.static('public'));
@@ -20,13 +19,16 @@ const db = mysql.createConnection({
 
 server.post('/athletes', (req, res) => {
     console.log(req.body);
-    const { NomAth, PrenomAth } = req.body;
+    const { NomAth, PrenomAth , Sport , Pays } = req.body;
     // Vérifier si au moins une variable de recherche est définie
-    if (NomAth || PrenomAth) {
+    if (NomAth || PrenomAth || Sport || Pays) {
         // Au moins une variable est définie, construire la requête SQL en fonction des données reçues
-        let formule = "SELECT * FROM athletes WHERE 1=1";
-        formule += NomAth ? ` AND athletes.nom_ath = '${NomAth}'` : '';
-        formule += PrenomAth ? ` AND athletes.prenom_ath = '${PrenomAth}'` : '';
+        let formule = "SELECT * FROM Athletes JOIN Pays ON Athletes.nationalite = Pays.code WHERE 1=1";
+        formule += NomAth ? ` AND nom_ath LIKE '%${NomAth}%'` : '';
+        formule += PrenomAth ? ` AND prenom_ath LIKE '%${PrenomAth}%'` : '';
+        formule += Sport ? ` AND nom_sport LIKE '%${Sport}%'` : '';
+        formule += Pays ? ` AND nom_pays LIKE '%${Pays}%'` : '';
+
 
         // Exécuter la requête SQL
         db.query(formule, (err, data) => {
@@ -46,16 +48,34 @@ server.post('/athletes', (req, res) => {
 });
 
 
-server.get('/sport' , (req, res)=>{
-    const formule = " SELECT * FROM SPORT "; 
+server.post('/sport' , (req, res)=>{
+    console.log(req.body);
+    const { nomEng, nomFr , type } = req.body;
+    // Vérifier si au moins une variable de recherche est définie
+    if (nomEng || nomFr || type) {
+        // Au moins une variable est définie, construire la requête SQL en fonction des données reçues
+        let formule = "SELECT * FROM sport WHERE 1=1";
+        formule += nomFr ? ` AND nom_sport LIKE '%${nomFr}%'` : '';
+        formule += nomEng ? ` AND nom_sport_eng LIKE '%${nomEng}%'` : '';
+        formule += type ? ` AND isIndividual = '${type}'` : '';
+
     db.query( formule , (err  , data)=>{
         if( err){
-            return res.status(400);
+            console.log(err);
+            return res.status(400).json();
         }
-        return res.json(data);
+        console.log(data);
+        return res.status(200).json({
+            data : data,
+            type : 'sprt'
+        });
 
     })
-})
+    }else{
+        return res.json({ message: "Aucun critère de recherche spécifié" });
+    }
+    }
+)
 
 
 server.get('/competiton',(req, res)=>{
@@ -79,6 +99,55 @@ server.get('/transport', (req, res)=>{
 
     })
 })
+
+
+server.post('/ath',(req , res)=>{
+    const { ath_ID } = req.body;
+    console.log(req.body);
+    if( ath_ID){
+        console.log(req.body);
+        const fomrule = `DELETE FROM athletes  WHERE ath_ID= '${ath_ID}'`;
+        db.query( fomrule , (err  , data)=>{
+            if( err){
+                console.log(err);
+                return res.status(400);
+            }
+            console.log("DELETED")
+            return res.status(200).json({
+                statu : "DELETED"
+            });
+    })    
+        } else{
+            res.json({
+                msg:"PROBLEME ON DELETING"
+            })
+        }
+        } 
+    )
+
+    server.post('/sprt',(req , res)=>{
+        const { ath_ID } = req.body;
+        console.log(req.body);
+        if( ath_ID){
+            console.log(req.body);
+            const fomrule = `DELETE FROM sport  WHERE sport_ID = '${ath_ID}'`;
+            db.query( fomrule , (err  , data)=>{
+                if( err){
+                    console.log(err);
+                    return res.status(400);
+                }
+                console.log("DELETED")
+                return res.status(200).json({
+                    statu : "DELETED"
+                });
+        })    
+            } else{
+                res.json({
+                    msg:"PROBLEME ON DELETING"
+                })
+            }
+            } 
+        )
 /********************** SERVER CONNEXION  *********************/
 server.listen(3500, () => {
     console.log(" +213's server is connected to port 5000");

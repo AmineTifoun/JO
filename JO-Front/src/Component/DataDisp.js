@@ -3,12 +3,14 @@ import logo from './../Tools/logo.png';
 import "./../Styles/DispData.css";
 import site from'./../Tools/sites.jpg'
 import axios from 'axios';
+import {useNavigate} from 'react-router-dom'
 
 export default function DataDisp({ Data, type  }) {
     const [randomNumber, setRandomNumber] = useState(null);
     const [isIndiv, setisIndiv] = useState('');
     const [photo , setPhoto] = useState(null);
     const [date_naisse , setDate] = useState("");
+    const navigate = useNavigate();
     // Fonction pour générer une date de naissance aléatoire
     function generateRandomDOB() {
         const minYear = 1990;
@@ -21,6 +23,16 @@ export default function DataDisp({ Data, type  }) {
         return dob.toDateString(); // Convertir la date en format de chaîne lisible
     }
 
+    const getAthbySport = async () => {
+        try {
+            console.log(Data.sport_ID);
+            const res = await axios.post('http://localhost:3500/athBysport', { id_sport: Data.sport_ID });
+            console.log(res.data);
+            navigate('/Results', { state: { data: res.data.data, type: res.data.type } });
+        } catch (err) {
+            console.log(err);
+        }
+    }
     useEffect(() => {
         switch (type) {
             case 'ath':
@@ -73,7 +85,7 @@ export default function DataDisp({ Data, type  }) {
 
                     </div>
                     <div class= 'btn-cont'>
-                        <button className="sprt-btn"> Athletes </button>
+                        <button className="sprt-btn" onClick={getAthbySport}> Athletes </button>
                         <button className="sprt-btn"> Competitions</button>
                     </div>
                 </div>

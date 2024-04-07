@@ -148,6 +148,24 @@ server.post('/ath',(req , res)=>{
             }
             } 
         )
+
+server.post('/athBysport', (req, res) => {
+    const { id_sport} = req.body;
+    const  formule = `SELECT * FROM participer JOIN sport ON participer.id_sport= sport.sport_ID JOIN athletes ON athletes.ath_ID = participer.athletes_id where sport_ID='${id_sport}' `;
+    db.query( formule , (err  , data)=>{
+        if( err){
+            console.log(err);
+            return res.status(400).json();
+        }
+        console.log(data);
+        return res.status(200).json({
+            data : data,
+            type : 'ath'
+        });
+})
+}
+);
+
 /********************** SERVER CONNEXION  *********************/
 server.listen(3500, () => {
     console.log(" +213's server is connected to port 5000");

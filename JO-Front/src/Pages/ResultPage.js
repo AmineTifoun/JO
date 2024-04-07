@@ -23,6 +23,8 @@ const ResultPage = () => {
         if( tuples.index !== 0 ){
             const updatedTuples = tuples.filter((_, index) => index !== currentIndex);
             setTuples(updatedTuples);
+
+            setCurrentIndex(0);
         }else{
             alert("NO MORE DATA ")
         }
@@ -34,11 +36,14 @@ const ResultPage = () => {
     };
 
     const goToNext = () => {
-        if (tuples !== null) {
+        if (tuples !== null && (currentIndex < tuples.length)) {
             setCurrentIndex((prevIndex) => Math.min(tuples.length - 1, prevIndex + 1));
         }
     };
 
+    useEffect(()=>{
+        
+    },[tuples])
         const DeleteAction = async () => {
                 switch (type){
                     case 'ath':
@@ -51,7 +56,8 @@ const ResultPage = () => {
                         break;
                     case 'sprt':
                         try{
-                            await axios.post('http://localhost:3500/sprt',{ ath_ID : tuples[currentIndex].ath_ID});
+                            console.log(tuples[currentIndex].sport_ID);
+                            await axios.post('http://localhost:3500/sprt',{ ath_ID: tuples[currentIndex].sport_ID});
                              }catch(err) {
                                 console.error(err);
                             }                        

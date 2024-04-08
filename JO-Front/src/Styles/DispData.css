@@ -24,7 +24,7 @@
 
 .profilePic{
     display: inline-block;
-    border : 2px solid #5f4e0d;
+    border: 1px #5f4e0d;
     border-radius: 50%;
 }
 
@@ -88,6 +88,13 @@
     box-shadow: rgba(213, 217, 217, .5) 0 2px 5px 0;
     outline: 0;
   }
+
+.compPic{
+    display: inline-block;
+    
+    border-radius: 10%;    
+
+}
 .btn-cont{
     margin-top: 20px;
     display: flex;

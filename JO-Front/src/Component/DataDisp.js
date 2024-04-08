@@ -3,7 +3,7 @@ import logo from './../Tools/logo.png';
 import "./../Styles/DispData.css";
 import site from'./../Tools/sites.jpg'
 import axios from 'axios';
-import {useNavigate} from 'react-router-dom'
+import {useNavigate , useLocation} from 'react-router-dom'
 
 export default function DataDisp({ Data, type  }) {
     const [randomNumber, setRandomNumber] = useState(null);
@@ -23,13 +23,18 @@ export default function DataDisp({ Data, type  }) {
         return dob.toDateString(); // Convertir la date en format de chaîne lisible
     }
 
-
+    useEffect(() => {
+        if (!Data) {
+            window.location.reload();
+        }
+    }, [Data]);
+    
     const getAthbySport = async () => {
         try {
             console.log(Data.sport_ID);
             const res = await axios.post('http://localhost:3500/athBysport', { id_sport: Data.sport_ID });
             console.log(res.data);
-            navigate('/Results', { state: { data: res.data.data, type: res.data.type } });
+            navigate('/ath', { state: { data: res.data.data, type: res.data.type } });
         } catch (err) {
             console.log(err);
         }
@@ -38,10 +43,11 @@ export default function DataDisp({ Data, type  }) {
     
     const getTransportBySite =  async()=>{
         try {
-            console.log(Data.sites_ID);
+            console.log(Data);
             const res = await axios.post('http://localhost:3500/transport', { sites_ID: Data.sites_ID });
-            console.log(res.data);
-            navigate('/Results', { state: { data: res.data.data, type: res.data.type } });
+            console.log('PROBLEM');
+            console.log(res);
+            navigate('/Transport', { state: { data: res.data.data, type: res.data.type } });
         } catch (err) {
             console.log(err);
         }
@@ -51,7 +57,7 @@ export default function DataDisp({ Data, type  }) {
         try {
             console.log(Data.sport_ID);
             const res = await axios.post('http://localhost:3500/competition', { id_comp: Data.sport_ID });
-            console.log(res.data);
+            
             navigate('/Results', { state: { data: res.data.data, type: res.data.type } });
         } catch (err) {
             console.log(err);
@@ -80,6 +86,12 @@ export default function DataDisp({ Data, type  }) {
             console.log(err);
         }
     }
+
+    useEffect(() => {
+        console.log("Data updated:", Data);
+        // Le reste du code ici
+    }, [Data]);
+    
     useEffect(() => {
         switch (type) {
             case 'ath':
@@ -111,7 +123,7 @@ export default function DataDisp({ Data, type  }) {
 
     return (
         <>
-            {type === 'ath' && (
+            {Data && type === 'ath' && (
                 <div className="ath">
                     <div className="TextContainer use">
                         <p><span className="style">Nom :</span> {Data.nom_ath}</p>
@@ -128,7 +140,7 @@ export default function DataDisp({ Data, type  }) {
                 </div>
             )}
 
-            {type === 'sprt' && (
+            {Data && type === 'sprt' && (
                 <div className="sprt">
                     <img  class ="profilePic" src={Data.img ? "http://localhost:3500/images/"+Data.img : logo} alt="Logo Sport" width={120} />
                     <div className="TextContainer sport">
@@ -144,7 +156,7 @@ export default function DataDisp({ Data, type  }) {
                 </div>
             )}
 
-            { type === 'site' && (
+            {Data && type === 'site' && (
                     <div className="site">
                     <img  class ="sitePic" src={photo} alt="Logo Localisation" width={120} />
                     <div className="TextContainer sites">
@@ -159,7 +171,7 @@ export default function DataDisp({ Data, type  }) {
                 </div>
 
             )}
-            { type === 'compt' && (
+            { Data && type === 'compt' && (
                 <div className="compt">
                     <img  className ="compPic" src={Data.img ? "http://localhost:3500/images/"+Data.img : logo} alt="Logo Sport" width={140} />
                     <div className="TextContainer sites">
@@ -173,7 +185,7 @@ export default function DataDisp({ Data, type  }) {
                     </div>
                 </div>
             )}
-            { type === 'agenda' && (
+            { Data && type === 'agenda' && (
                 <div className="compt">
                     <div className="TextContainer sites">
                         <p><span className="style">Date:</span> {Data.date_deroulement}</p>
@@ -184,7 +196,7 @@ export default function DataDisp({ Data, type  }) {
                     </div>
                 </div>
             )}
-            { type === 'trnspr' && (
+            { Data &&  type === 'trnspr' && (
                 <div className="compt">
                     <img  class ="profilePic" src={(Data.logo_ligne)? "http://localhost:3500/images/"+Data.logo_ligne : logo} alt="Logo Sport" width={140} />
                     <div className="TextContainer sites">

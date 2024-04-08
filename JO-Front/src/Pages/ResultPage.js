@@ -23,6 +23,13 @@ const ResultPage = () => {
         setType(location.state.type);
     }, [location.state.data, location.state.type]);
 
+    useEffect(()=>{
+        console.log(location.state.data);
+        setTuples(location.state.data);
+        console.log(type);
+
+    } , [location.state.data])
+
     const handleDataDelete = () => {
         if( tuples.index !== 0 ){
             const updatedTuples = tuples.filter((_, index) => index !== currentIndex);
@@ -121,15 +128,28 @@ const ResultPage = () => {
                     </div>
                     )}
                 {update && (
-                <div>
-                    { type ==='ath' && (<Update ID={tuples[currentIndex].ath_ID} type={type}></Update>)}
-                    { type ==='sprt' && (<Update ID={tuples[currentIndex].sport_ID} type={type}></Update>)}
-                    { type ==='site' && (<Update ID={tuples[currentIndex].sites_ID} type={type}></Update>)}
-                    { type === 'compt' && (<Update ID={tuples[currentIndex].comp_ID} type={type}></Update>)}
-                    {type === 'trnspr' && (<Update ID={tuples[currentIndex].arret_ID} type={type}></Update>)}
-                    {type === 'agenda' && (<Update ID={tuples[currentIndex].agenda_ID} type={type}></Update>)}
-                </div>
-            )}
+    <div>
+        {type === 'ath' && (
+            <Update ID={tuples[currentIndex].ath_ID} type={type} />
+        )}
+        {type === 'sprt' && (
+            <Update ID={tuples[currentIndex].sport_ID} type={type} />
+        )}
+        {type === 'site' && (
+            <Update ID={tuples[currentIndex].sites_ID} type={type} />
+        )}
+        {type === 'compt' && (
+            <Update ID={tuples[currentIndex].comp_ID} type={type} />
+        )}
+        {type === 'trnspr' && (
+            <Update ID={tuples[currentIndex].arret_ID} type={type} />
+        )}
+        {type === 'agenda' && (
+            <Update ID={tuples[currentIndex].agenda_ID} type={type} />
+        )}
+    </div>
+)}
+
                 </div>
                 <div className="navigation-buttons">
                     <button onClick={goToPrevious} disabled={currentIndex === 0} className='btn-nav'>Précédent</button>

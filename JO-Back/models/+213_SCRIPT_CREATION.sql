@@ -38,12 +38,12 @@ CREATE TABLE Competition (
 
 CREATE TABLE Calendrier (
     agenda_ID INT(6) AUTO_INCREMENT PRIMARY KEY, -- Identifiant de l'agenda
-    date_deroulement DATE, -- Date de déroulement de la compétition
-    heure_deroulement TIME -- Heure de déroulement de la compétition
+    date_deroulement VARCHAR(100), -- Date de déroulement de la compétition
+    heure_deroulement VARCHAR(100) -- Heure de déroulement de la compétition
 );
 
 CREATE TABLE Sites (
-    sites_ID INT(6) AUTO_INCREMENT PRIMARY KEY, -- Identifiant du site
+    sites_ID VARCHAR(100), -- Identifiant du site
     nom_site VARCHAR(70) NOT NULL, -- Nom du site
     date_realisation DATE, -- Date de réalisation du site
     adresse VARCHAR(70) NOT NULL, -- Adresse du site
@@ -53,7 +53,7 @@ CREATE TABLE Sites (
 );
 
 CREATE TABLE Pays (
-    code VARCHAR(5) PRIMARY KEY, -- Code du pays
+    code VARCHAR(70) PRIMARY KEY, -- Code du pays
     nom_pays VARCHAR(70), -- Nom du pays
     nom_pays_eng VARCHAR(70), -- Nom du pays en anglais
     drapeau VARCHAR(255) -- URL du drapeau du pays
@@ -64,24 +64,22 @@ CREATE TABLE Transport (
     nom_arret VARCHAR(70) NOT NULL, -- Nom de l'arrêt de transport
     type_transport VARCHAR(20), -- Type de transport
     gps_arret VARCHAR(255), -- Coordonnées GPS de l'arrêt de transport
-    num_ligne INT(4), -- Numéro de ligne de transport
+    num_ligne VARCHAR(10), -- Numéro de ligne de transport
     logo_ligne VARCHAR(255) -- URL du logo de la ligne de transport
 );
 
 CREATE TABLE participer (
     id_sport INT(6), -- Identifiant du sport
     athletes_id INT(6), -- Identifiant de l'athlète
-    FOREIGN KEY (id_sport) REFERENCES Sport(sport_ID), -- Clé étrangère vers la table Sport
-    FOREIGN KEY (athletes_id) REFERENCES Athletes(ath_ID) -- Clé étrangère vers la table Athletes
-    ON DELETE CASCADE;
+    FOREIGN KEY (id_sport) REFERENCES Sport(sport_ID) ON DELETE CASCADE, -- Clé étrangère vers la table Sport
+    FOREIGN KEY (athletes_id) REFERENCES Athletes(ath_ID)ON DELETE CASCADE -- Clé étrangère vers la table Athletes
 );
 
 CREATE TABLE Programmer (
     agenda_id INT(6), -- Identifiant de l'agenda
     compete_id INT(6), -- Identifiant de la compétition
-    FOREIGN KEY (agenda_id) REFERENCES Calendrier(agenda_ID), -- Clé étrangère vers la table Calendrier
-    FOREIGN KEY (compete_id) REFERENCES Competition(comp_ID) -- Clé étrangère vers la table Competition
-    ON DELETE CASCADE;
+    FOREIGN KEY (agenda_id) REFERENCES Calendrier(agenda_ID) ON DELETE CASCADE, -- Clé étrangère vers la table Calendrier
+    FOREIGN KEY (compete_id) REFERENCES Competition(comp_ID)ON DELETE CASCADE -- Clé étrangère vers la table Competition
 );
 
 CREATE TABLE derouler (
@@ -95,16 +93,15 @@ CREATE TABLE derouler (
 CREATE TABLE abriter (
     id_sport INT(6), -- Identifiant de la discipline sportive
     id_compet INT(6), -- Identifiant de la compétition
-    FOREIGN KEY (id_discipline) REFERENCES Sport(sport_ID), -- Clé étrangère vers la table DisciplineSportive
-    FOREIGN KEY (id_compet) REFERENCES Competition(comp_ID) -- Clé étrangère vers la table Competition
-    ON DELETE CASCADE;
+    FOREIGN KEY (id_discipline) REFERENCES Sport(sport_ID)ON DELETE CASCADE, -- Clé étrangère vers la table DisciplineSportive
+    FOREIGN KEY (id_compet) REFERENCES Competition(comp_ID)ON DELETE CASCADE -- Clé étrangère vers la table Competition
 );
 
 CREATE TABLE concurrencer (
     id_athletes INT(6), -- Identifiant de l'athlète
     code_pays VARCHAR(5), -- Code du pays
-    FOREIGN KEY (id_athletes) REFERENCES Athletes(ath_ID), -- Clé étrangère vers la table Athletes
-    FOREIGN KEY (code_pays) REFERENCES Pays(code) -- Clé étrangère vers la table Pays
+    FOREIGN KEY (id_athletes) REFERENCES Athletes(ath_ID)ON DELETE CASCADE, -- Clé étrangère vers la table Athletes
+    FOREIGN KEY (code_pays) REFERENCES Pays(code)ON DELETE CASCADE -- Clé étrangère vers la table Pays
     ON DELETE CASCADE;
 );
 

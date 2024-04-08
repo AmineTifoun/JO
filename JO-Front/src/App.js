@@ -15,6 +15,11 @@ function App() {
                 <Route path='/' element={<Home></Home>}></Route>
                 <Route path='/Filter' element={ <Filter></Filter>} ></Route>
                 <Route path='/Results' element={ <ResultPage></ResultPage>}></Route>
+                <Route path='/ath' element={ <ResultPage></ResultPage>}></Route>
+                <Route path='/Transport' element={ <ResultPage></ResultPage>}></Route>
+                <Route path='/Results' element={ <ResultPage></ResultPage>}></Route>
+                <Route path='/Results' element={ <ResultPage></ResultPage>}></Route>
+                <Route path='/Results' element={ <ResultPage></ResultPage>}></Route>
                 <Route path='/test' element={ <DataDisp type={'compt'}></DataDisp>}></Route>
             </Routes>
     </Router>

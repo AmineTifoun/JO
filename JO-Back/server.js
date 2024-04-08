@@ -170,6 +170,7 @@ server.post('/transport', (req, res)=>{
             console.log(err);
             return res.status(400);
         }
+        console.log(data);
         return res.status(200).json({
             data: data ,
             type: 'trnspr'
@@ -364,14 +365,19 @@ server.post('/sites', (req , res)=>{
 
 server.post('/updateAth', (req, res) => {
     console.log(req.body);
-    const { id, nomAth, date_naissance, medailles, PrenomFr } = req.body;
+    const { id, nomFr, date_naissance, medailles, PrenomFr } = req.body;
     let formule = "UPDATE Athletes SET ";
-    formule += (nomAth) ? `nom_ath = '${nomAth}' ` : '';
-    formule+= (PrenomFr) ?` prenom_ath = '${PrenomFr}'`:'';
-    formule += (date_naissance) ? `date_naissance = '${date_naissance}' ` : '';
-    formule += (medailles) ? `nb_medailles = '${medailles}' ` : '';
-    formule += `WHERE ath_ID = '${id}'`;
-    console.log(formule);
+        formule += (nomFr) ? `nom_ath = '${nomFr}', ` : '';
+        formule += (PrenomFr) ? `prenom_ath = '${PrenomFr}', ` : '';
+        formule += (date_naissance) ? `date_naissance = '${date_naissance}', ` : '';
+        formule += (medailles) ? `nb_medailles = '${medailles}', ` : '';
+
+        // Supprimer la dernière virgule si elle existe
+        if (formule.endsWith(', ')) {
+            formule = formule.slice(0, -2); // Supprimer les deux derniers caractères
+        }
+
+        formule += ` WHERE ath_ID = '${id}'`;
     db.query(formule, (err, data) => {
         if (err) {
             console.log(err);
@@ -389,10 +395,16 @@ server.post('/updateAth', (req, res) => {
 server.post('/updateSprt' , (req , res)=>{
     const { id, nomFr, adhesion, isIndiv, nomEng } = req.body;
     let formule = "UPDATE sport SET ";
-    formule += (nomFr) ? `nom_sport = '${nomFr}'` : '';
-    formule += (adhesion) ? `date_adhesion = '${adhesion}'` : '';
-    formule += (isIndiv) ? `isIndividual = '${isIndiv}' ` : '';
-    formule += (nomEng) ? `nom_sport_eng = '${nomEng}' ` : '';
+formule += (nomFr) ? `nom_sport = '${nomFr}', ` : '';
+formule += (adhesion) ? `date_adhesion = '${adhesion}', ` : '';
+formule += (isIndiv) ? `isIndividual = '${isIndiv}', ` : '';
+formule += (nomEng) ? `nom_sport_eng = '${nomEng}', ` : '';
+
+// Supprimer la dernière virgule si elle existe
+if (formule.endsWith(', ')) {
+    formule = formule.slice(0, -2); // Supprimer le dernier caractère
+}
+
     formule += `WHERE sport_ID = '${id}'`;
     console.log(formule);
     db.query(formule, (err, data) => {

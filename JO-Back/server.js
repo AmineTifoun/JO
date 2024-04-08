@@ -20,13 +20,17 @@ const db = mysql.createConnection({
 server.post('/athletes', (req, res) => {
     console.log(req.body);
     const { NomAth, PrenomAth , Sport , Pays } = req.body;
+    let formule ;
     // Vérifier si au moins une variable de recherche est définie
     if (NomAth || PrenomAth || Sport || Pays) {
-        // Au moins une variable est définie, construire la requête SQL en fonction des données reçues
-        let formule = "SELECT * FROM Athletes JOIN Pays ON Athletes.nationalite = Pays.code WHERE 1=1";
+        if(Sport){
+            formule = "SELECT * FROM Pays JOIN Athletes ON Athletes.nationalite = Pays.code JOIN participer ON participer.athletes_id = Athletes.ath_ID JOIN sport ON sport.sport_ID = participer.id_sport  WHERE 1=1";
+            formule += Sport ? ` AND nom_sport LIKE '%${Sport}%'` : '';
+        }else{
+            formule="SELECT * FROM Pays JOIN Athletes ON Athletes.nationalite = Pays.code where 1=1 "
+        }
         formule += NomAth ? ` AND nom_ath LIKE '%${NomAth}%'` : '';
         formule += PrenomAth ? ` AND prenom_ath LIKE '%${PrenomAth}%'` : '';
-        formule += Sport ? ` AND nom_sport LIKE '%${Sport}%'` : '';
         formule += Pays ? ` AND nom_pays LIKE '%${Pays}%'` : '';
 
 
@@ -97,7 +101,8 @@ server.post('/competition',(req, res)=>{
 
 server.post('/updateComp' , (req,res)=>{
     console.log(req.body);
-    const { id, nom_comp, categorie_comp, step_comp, } = req.body;
+    const { id, nom_comp, categorie_comp, step_comp} = req.body;
+    if( nom_comp|| categorie_comp|| step_comp ){
     let formule = "UPDATE competition SET ";
     formule += (nom_comp) ? `nom_comp = '${nom_comp}' ` : '';
     formule += (categorie_comp) ? `categorie_comp = '${categorie_comp}' ` : '';
@@ -114,20 +119,79 @@ server.post('/updateComp' , (req,res)=>{
                 state: "Success"
             });
         }
-    });
-})
+    })}else{
+        res.json({
+            msg:"PROBLEME ON UPDATING"
+        })
+}})
 
-server.get('/transport', (req, res)=>{
-    const formule = " SELECT * FROM transport "; 
+server.post('/transport', (req, res)=>{
+    const {sites_ID} = req.body ;
+    console.log(sites_ID);
+    const formule = `SELECT * FROM transport  JOIN desservir ON transport.arret_ID = id_transport JOIN sites ON desservir.id_sites = sites.sites_ID where sites_ID =  '${sites_ID}'`; 
     db.query( formule , (err  , data)=>{
         if( err){
+            console.log(err);
             return res.status(400);
         }
-        return res.json(data);
+        return res.status(200).json({
+            data: data ,
+            type: 'trnspr'
+        }
+        );
 
     })
 })
 
+server.post('/deleteSite' , (req , res)=>{
+    const { sites_ID } = req.body;
+    console.log(req.b)
+    if( sites_ID){
+        console.log("delete" + req.body);
+        const fomrule = `DELETE FROM sites  WHERE sites_ID= '${sites_ID}'`;
+        db.query( fomrule , (err  , data)=>{
+            if( err){
+                console.log(err);
+                return res.status(400);
+            }
+            console.log("DELETED")
+            return res.status(200).json({
+                statu : "DELETED"
+            });
+    })    
+        } else{
+            res.json({
+                msg:"PROBLEME ON DELETING"
+            })
+        }
+        }  )
+
+server.post('/updateSite' ,( req , res)=>{
+    const { id, nom_site, capacite, adresse, gps } = req.body;
+    if(nom_site || capacite || adresse ||gps){
+    let formule = "UPDATE sites SET ";
+    formule += (nom_site) ? `nom_site = '${nom_site}' ` : '';
+    formule += (capacite) ? `capacite = '${capacite}' ` : '';
+    formule += (adresse) ? `adresse = '${adresse}' ` : '';
+    formule += (gps) ? `gps = '${gps}' ` : '';
+    formule += `WHERE sites_ID = '${id}'`;
+    db.query(formule, (err, data) => {
+        if (err) {
+            console.log(err);
+            res.status(300).json({
+                state: err
+            });
+        } else {
+            res.status(200).json({
+                state: "Success"
+            });
+        }
+    });}else{
+        res.json({
+            msg:"PROBLEME ON UPDATING"
+        })
+    }
+})
 
 server.post('/ath',(req , res)=>{
     const { ath_ID } = req.body;
@@ -177,6 +241,19 @@ server.post('/ath',(req , res)=>{
             } 
         )
 
+server.post('/deleteTrans' , (req , res)=>{
+    const { arret_ID }= req.body;
+    db.query(`DELETE FROM transport WHERE arret_ID = '${arret_ID}'`, (err , data)=>{
+        if( err){
+            console.log(err);
+            return res.status(400);
+        }
+        console.log("DELETED")
+        return res.status(200).json({
+            statu : "DELETED"
+        });
+    })
+})
 server.post('/athBysport', (req, res) => {
     const { id_sport} = req.body;
     const  formule = `SELECT * FROM participer JOIN sport ON participer.id_sport= sport.sport_ID JOIN athletes ON athletes.ath_ID = participer.athletes_id where sport_ID='${id_sport}' `;
@@ -194,18 +271,57 @@ server.post('/athBysport', (req, res) => {
 }
 );
 
+server.post('/sites', (req , res)=>{
+    console.log(req.body);
+    const { nomSite, nom_sport , capacite , adress } = req.body;
+    let formule ;
+    // Vérifier si au moins une variable de recherche est définie
+    if (nomSite || capacite || capacite || adress || nom_sport) {
+        if( nom_sport){
+             formule = "SELECT * FROM sport JOIN abriter ON sport.sport_ID = abriter.sport_id JOIN competition ON abriter.id_compet = competition.comp_ID JOIN derouler ON competition.comp_ID= derouler.id_comp JOIN sites ON  derouler.id_site = sites.Sites_ID WHERE 1=1";
+        }else{
+             formule = "SELECT * FROM sites where 1=1"
+        }
+        formule += nomSite ? ` AND nom_site LIKE '%${nomSite}%'` : '';
+        formule += nom_sport ? ` AND nom_sport LIKE '%${nom_sport}%'` : '';
+        formule += capacite ? ` AND capacite <= '${capacite}'` : '';
+        formule += adress ? ` AND adresse LIKE '%${adress}%'` : '';
+
+
+        // Exécuter la requête SQL
+        db.query(formule, (err, data) => {
+            if (err) {
+                console.log(err);
+                return res.status(300).json(err);
+            }
+            console.log(data);
+            return res.status(200).json({
+                data: data ,
+                type:'site'
+            });
+        });
+    } else {
+        // Aucune variable de recherche n'est définie, renvoyer une réponse indiquant qu'aucune recherche n'a été effectuée
+        return res.json({ message: "Aucun critère de recherche spécifié" });
+    }
+    
+})
+
+
+
 server.post('/updateAth', (req, res) => {
     console.log(req.body);
-    const { id, nomAth, date_naissance, medailles, PrenomAth } = req.body;
+    const { id, nomAth, date_naissance, medailles, PrenomFr } = req.body;
     let formule = "UPDATE Athletes SET ";
     formule += (nomAth) ? `nom_ath = '${nomAth}' ` : '';
+    formule+= (PrenomFr) ?` prenom_ath = '${PrenomFr}'`:'';
     formule += (date_naissance) ? `date_naissance = '${date_naissance}' ` : '';
     formule += (medailles) ? `nb_medailles = '${medailles}' ` : '';
-    formule += (PrenomAth) ? `prenom_ath = '${PrenomAth}' ` : '';
     formule += `WHERE ath_ID = '${id}'`;
     console.log(formule);
     db.query(formule, (err, data) => {
         if (err) {
+            console.log(err);
             res.status(300).json({
                 state: err
             });
@@ -229,6 +345,29 @@ server.post('/updateSprt' , (req , res)=>{
     db.query(formule, (err, data) => {
         if (err) {
             console.log(err);
+            res.status(300).json({
+                state: err
+            });
+        } else {
+            res.status(200).json({
+                state: "Success"
+            });
+        }
+    });
+})
+
+server.post('/updateTrans' , (req , res)=>{
+    console.log("AMINE");
+    const { id, nom_arret, gps , num_ligne } = req.body;
+    let formule = "UPDATE transport SET ";
+    formule += (nom_arret) ? `nom_arret = '${nom_arret}'` : '';
+    formule += (num_ligne) ? `num_ligne = '${num_ligne}'` : '';
+    formule += (gps) ? `gps_arret = '${gps}' ` : '';
+    formule += `WHERE arret_ID = '${id}'`;
+    console.log(formule);
+    db.query(formule, (err, data) => {
+        if (err) {
+            console.log(formule);
             res.status(300).json({
                 state: err
             });

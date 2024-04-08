@@ -35,6 +35,17 @@ export default function DataDisp({ Data, type  }) {
         }
     }
 
+    
+    const getTransportBySite =  async()=>{
+        try {
+            console.log(Data.sites_ID);
+            const res = await axios.post('http://localhost:3500/transport', { sites_ID: Data.sites_ID });
+            console.log(res.data);
+            navigate('/Results', { state: { data: res.data.data, type: res.data.type } });
+        } catch (err) {
+            console.log(err);
+        }
+    }
 
     const getCompetition = async () => {
         try {
@@ -66,6 +77,8 @@ export default function DataDisp({ Data, type  }) {
                 break;
             case 'compt':
                 break ;
+            case 'trnspr':
+                break;
             default:
                 alert(" ERROR SETTING VARIABLES ");
         }
@@ -84,7 +97,7 @@ export default function DataDisp({ Data, type  }) {
                         
                     </div>
                     <div class="img-con">
-                        <img  class ="profilePic" src={Data.img ? "http://localhost:3500/images/"+Data.img : logo} alt="Photo De Profile" width={165} />
+                        <img  class ="profilePic" src={Data.image ? "http://localhost:3500/images/"+Data.image : logo} alt="Photo De Profile" width={165} />
                         <p><span className="style label2">Drapeau</span></p>
                     </div>
                 </div>
@@ -107,8 +120,8 @@ export default function DataDisp({ Data, type  }) {
             )}
 
             { type === 'site' && (
-                <div className="site">
-                    <img  class ="sitePic" src={photo} alt="Logo Localisation" width={1220} />
+                    <div className="site">
+                    <img  class ="sitePic" src={photo} alt="Logo Localisation" width={120} />
                     <div className="TextContainer sites">
                         <p><span className="style">Nom Site:</span> {Data.nom_site}</p>
                         <p><span className="style">Adresse:</span> {Data.adresse}</p>
@@ -116,9 +129,10 @@ export default function DataDisp({ Data, type  }) {
                         <p><span className="style">Capicité :</span> {Data.capacite}</p>
                     </div>
                     <div class= 'btn-cont'>
-                        <button className="trsprt-btn sprt-btn"> Transports </button>
+                        <button className="trsprt-btn sprt-btn" onClick={getTransportBySite}> Transports </button>
                     </div>
                 </div>
+
             )}
             { type === 'compt' && (
                 <div className="compt">
@@ -129,6 +143,20 @@ export default function DataDisp({ Data, type  }) {
                         <p><span className="style">Niveau :</span> {Data.step_comp}</p>
                         <div class= 'btn-cont'>
                         <button className="trsprt-btn sprt-btn"> Sites </button>
+                    </div>
+                    </div>
+                </div>
+            )}
+            { type === 'trnspr' && (
+                <div className="compt">
+                    <img  class ="profilePic" src={(Data.logo_ligne)? "http://localhost:3500/images/"+Data.logo_ligne : logo} alt="Logo Sport" width={140} />
+                    <div className="TextContainer sites">
+                        <p><span className="style">Nom Arret:</span> {Data.nom_arret}</p>
+                        <p><span className="style">Type Transport:</span> {Data.type_transport}</p>
+                        <p><span className="style">Num Ligne :</span> {Data.num_ligne}</p>
+                        <p><span className="style">GPS :</span> {Data.gps_arret}</p>
+                        <div class= 'btn-cont'>
+                        <button className="trsprt-btn sprt-btn" onClick={(e)=>{ navigate('/Filter')}}> RETOUR AU FILTRE </button>
                     </div>
                     </div>
                 </div>

@@ -76,8 +76,47 @@ export default function Filter() {
     } catch (err) {
       console.error(err);
     }
-  }
 
+  }
+   const handleSiteSubmit = async (event)=>{
+    event.preventDefault();
+    const data = {};
+    // Récupérer les valeurs des champs
+    const nomSite = event.target[0].value;
+    const nom_sport = event.target[1].value;
+    const capacite = event.target[2].value;
+    const adress = event.target[3].value;
+
+    // Ajouter les valeurs au data
+    if (nomSite !== "") {
+      data.nomSite = nomSite;
+    }
+    if (nom_sport !== "") {
+      data.nom_sport = nom_sport;
+    }
+    if (capacite) {
+      data.capacite = capacite;
+    }
+    if (adress) {
+      data.adress = adress;
+    }
+
+    try {
+      console.log(data);
+      const res = await axios.post('http://localhost:3500/sites', data); 
+      console.log((res.data.data));
+      if (res.data.data.length > 0) {
+        navigate('/Results', { state: { data: res.data.data, type: res.data.type } });
+        console.log(res);
+      } else {
+        alert("PAS DE CORRESPONDANCES TROUVÉES !! ");
+      }
+    } catch (err) {
+      console.error(err);
+    }
+
+    
+  }
   return (
     <div className="Grnd">
       <div className="filtre">
@@ -108,10 +147,10 @@ export default function Filter() {
       </div>
       <div className="filtre">
         <h4 className="Titre">Sites</h4>
-        <form className="form">
+        <form className="form" onSubmit={handleSiteSubmit}>
           <input type="text" className="input" placeholder="Nom Site" />
           <input type="text" className="input" placeholder="Nom Sport" />
-          <input type="text" className="input" placeholder="Capacité" />
+          <input type="text" className="input" placeholder="Capacité Max" />
           <input type="text" className="input" placeholder="Adresse" />
           <button className="btn">Rechercher</button>
         </form>

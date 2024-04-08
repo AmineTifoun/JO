@@ -68,7 +68,15 @@ const ResultPage = () => {
                             break;
                     case 'site':
                         try{
-                            await axios.post('http://localhost:3500/ath', tuples[currentIndex].ath_ID);
+                            console.log(tuples[currentIndex].sites_ID)
+                            await axios.post('http://localhost:3500/deleteSite', { sites_ID :tuples[currentIndex].sites_ID});
+                             }catch(err) {
+                                console.error(err);
+                            }                        
+                            break ;
+                    case 'trnspr':
+                        try{
+                            await axios.post('http://localhost:3500/deleteTrans', {arret_ID :tuples[currentIndex].arret_ID});
                              }catch(err) {
                                 console.error(err);
                             }                        
@@ -82,7 +90,7 @@ const ResultPage = () => {
                             break ;
         }
         handleDataDelete();
-        };
+            };
 
         const updateAction = ()=>{
                 setUpdate(true);
@@ -108,8 +116,9 @@ const ResultPage = () => {
                 <div>
                     { type ==='ath' && (<Update ID={tuples[currentIndex].ath_ID} type={type}></Update>)}
                     { type ==='sprt' && (<Update ID={tuples[currentIndex].sport_ID} type={type}></Update>)}
-                    { type ==='ath' && (<Update ID={tuples[currentIndex].ath_ID} type={type}></Update>)}
+                    { type ==='site' && (<Update ID={tuples[currentIndex].sites_ID} type={type}></Update>)}
                     { type === 'compt' && (<Update ID={tuples[currentIndex].comp_ID} type={type}></Update>)}
+                    {type === 'trnspr' && (<Update ID={tuples[currentIndex].arret_ID} type={type}></Update>)}
                 </div>
             )}
                 </div>

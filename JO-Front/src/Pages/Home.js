@@ -11,16 +11,27 @@ import loop from './../Tools/Loop.png'
 import filter from './../Tools/filter.png'
 import TUBE from './../Tools/TUBE.png'
 import { useNavigate } from 'react-router-dom';
-
+import axios from 'axios';
 export default function Home(){
     const [ search , setSeach] = useState("");
     const navigate = useNavigate()
-    function HandleSearchChange(e){
+    const  HandleSearchChange = async (e)=>{
         setSeach(e.target.value);
-        
+        console.log(search)
     }
-
-    function onSubmit(){/* Traitement de la string de donnée*/
+    const go = async ()=>{
+    try{
+        console.log(search)
+        const res = await axios.post('http://localhost:3500/sport' , { nomFr : search});
+        if ( res.data.data.length !== 0){
+            navigate('/Results', { state: { data: res.data.data, type: res.data.type } });
+        }else{
+            alert("NO DATA FOUND")
+        }
+        }catch(err){
+            console.log(err);
+        console.error(err);
+    }
 
     }
 
@@ -30,11 +41,11 @@ export default function Home(){
             <div className='container'>
                 <img src={drapeau} alt='Flags' className='drapeau'></img>
                 <img src={logo} alt='Flags' className='logo'></img>
-                <input type='search' name='search' className='search' placeholder='Rechercher...' value={search} onChange={HandleSearchChange}></input>
+                <input type='search' name='search' className='search' placeholder='Nom Sport ... ' value={search} onChange={HandleSearchChange}></input>
                 <div className='buttons'>
                     <img src={filter} alt='' onClick={()=>{navigate("/Filter")}}></img>
                     <img src={TUBE}alt='' className='tube'></img>                    
-                    <img src={loop} alt='' onClick={onSubmit}></img>
+                    <img src={loop} alt='' onClick={ ()=>{go()}}></img>
                 </div>
                 <div className='communication'>
                     <a href='https://www.facebook.com/actujeuxolympiques/?locale=fr_FR'>

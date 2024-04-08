@@ -106,6 +106,69 @@ export default function Update({ ID, type }) {
             }
         };
 
+        const handleSubmitSite = async(event)=>{
+            event.preventDefault();
+            const update = {};
+            update.id = ID; // Assuming ID is defined elsewhere in your code
+            console.log(event.target)
+            // Extract values from form fields
+            const nom_site = event.target[0].value;
+            console.log(nom_site);
+            const gps= event.target[1].value;
+            const capacite= event.target[2].value;
+            const adresse= event.target[3].value;
+           
+        
+            // Add properties to update object if they exist
+            if (gps) {
+                update.gps = gps;
+            }
+            if (nom_site) {
+                update.nom_site = nom_site;
+            }
+            if (capacite) {
+                update.capacite = capacite;
+            }
+            if (adresse) {
+                update.adresse = adresse;
+            }
+      
+            try {
+                const res = await axios.post('http://localhost:3500/updateSite', update);
+                navigate('/Filter');
+            } catch (err) {
+                console.error(err);
+            }
+        };
+
+        const handleSubmitTrans = async(event)=>{
+            event.preventDefault();
+            const update = {};
+            update.id = ID; // Assuming ID is defined elsewhere in your code
+            // Extract values from form fields
+            const nom_arret = event.target[0].value;
+            const gps= event.target[2].value;
+            const num_ligne= event.target[1].value;
+           
+        
+            // Add properties to update object if they exist
+            if (gps) {
+                update.gps = gps;
+            }
+            if (nom_arret) {
+                update.nom_arret = nom_arret;
+            }
+            if (num_ligne) {
+                update.num_ligne = num_ligne;
+            }      
+            try {
+                const res = await axios.post('http://localhost:3500/updateTrans', update);
+                console.log(res)
+                navigate('/Filter');
+            } catch (err) {
+                console.error(err);
+            }
+        };
     return (
         <>
             <div className="bg">
@@ -146,12 +209,12 @@ export default function Update({ ID, type }) {
                     <div className="model_ath">
                         <h3 className="titre"> Update Site</h3>
                         <h4>     </h4>
-                        <form className="form">
+                        <form className="form" onSubmit={handleSubmitSite}>
                         <input type="text" className="input" placeholder="Nom Site" />
-                        <input type="text" className="input" placeholder="Nom Sport" />
+                        <input type="text" className="input" placeholder="GPS" />
                         <input type="text" className="input" placeholder="Capacité" />
                         <input type="text" className="input" placeholder="Adresse" />
-                        <button className="btn">APPLIQUER</button>
+                        <button className="btn" >APPLIQUER</button>
                     </form>
                     </div>
                 )
@@ -169,6 +232,20 @@ export default function Update({ ID, type }) {
                     </div>
                 )
                 }
+                { type === "trnspr" &&(
+                    <div className="model_ath">
+                        <h3 className="titre"> Update Transport</h3>
+                        <h4>     </h4>
+                        <form className="form" onSubmit={handleSubmitTrans}>
+                        <input type="text" className="input" placeholder="Nom Arret" />
+                        <input type="text" className="input" placeholder="Num Ligne " />
+                        <input type="text" className="input" placeholder="GPS" />
+                        <button className="btn">APPLIQUER</button>
+                    </form>
+                    </div>
+                )
+                }
+                
            </div>
         </>
     );

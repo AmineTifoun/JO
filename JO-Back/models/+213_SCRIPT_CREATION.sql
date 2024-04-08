@@ -86,14 +86,14 @@ CREATE TABLE Programmer (
 
 CREATE TABLE derouler (
     id_comp INT(6), -- Identifiant de la compétition
-    id_site INT(6), -- Identifiant du site
-    FOREIGN KEY (id_comp) REFERENCES Competition(comp_ID), -- Clé étrangère vers la table Competition
-    FOREIGN KEY (id_site) REFERENCES Sites(sites_ID) -- Clé étrangère vers la table Sites
-    ON DELETE CASCADE;
+    id_site VARCHAR(400), -- Identifiant du site
+    FOREIGN KEY (id_comp) REFERENCES Competition(comp_ID) ON DELETE CASCADE;, -- Clé étrangère vers la table Competition
+    FOREIGN KEY (id_site) REFERENCES Sites(sites_ID) ON DELETE CASCADE;-- Clé étrangère vers la table Sites
+    
 );
 
 CREATE TABLE abriter (
-    id_discipline INT(6), -- Identifiant de la discipline sportive
+    id_sport INT(6), -- Identifiant de la discipline sportive
     id_compet INT(6), -- Identifiant de la compétition
     FOREIGN KEY (id_discipline) REFERENCES Sport(sport_ID), -- Clé étrangère vers la table DisciplineSportive
     FOREIGN KEY (id_compet) REFERENCES Competition(comp_ID) -- Clé étrangère vers la table Competition
@@ -109,9 +109,9 @@ CREATE TABLE concurrencer (
 );
 
 CREATE TABLE desservir (
-    id_sites INT(6), -- Identifiant du site
+    id_sites VARCHAR(40), -- Identifiant du site
     id_transport INT(6), -- Identifiant du transport
-    FOREIGN KEY (id_sites) REFERENCES Sites(sites_ID), -- Clé étrangère vers la table Sites
-    FOREIGN KEY (id_transport) REFERENCES Transport(arret_ID) -- Clé étrangère vers la table Transport
-    ON DELETE CASCADE;
+    FOREIGN KEY (id_sites) REFERENCES Sites(sites_ID) ON DELETE CASCADE, -- Clé étrangère vers la table Sites
+    FOREIGN KEY (id_transport) REFERENCES Transport(arret_ID)ON DELETE CASCADE-- Clé étrangère vers la table Transport
+    
 );

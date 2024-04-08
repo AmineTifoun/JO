@@ -76,7 +76,15 @@ const ResultPage = () => {
                             break ;
                     case 'trnspr':
                         try{
-                            await axios.post('http://localhost:3500/deleteTrans', {arret_ID :tuples[currentIndex].arret_ID});
+                            const res = await axios.post('http://localhost:3500/deleteTrans', {arret_ID :tuples[currentIndex].arret_ID});
+                             }catch(err) {
+                                console.error(err);
+                            }                        
+                            break ;
+                    case 'compt' :
+                        try{
+                            console.log("dans try");
+                            await axios.post('http://localhost:3500/deleteComp', {comp_ID :tuples[currentIndex].comp_ID});
                              }catch(err) {
                                 console.error(err);
                             }                        
@@ -106,7 +114,7 @@ const ResultPage = () => {
                         <DataDisp Data={tuples[currentIndex]} type={type}  />
                     )}
                 { tuples && (<div>{currentIndex+1} / {tuples.length}</div>)}
-                {tuples && (
+                {tuples && type !== 'agenda' && (
                     <div>
                     <button  onClick={DeleteAction} className='btn-nav'>Supprimer</button>
                     <button  onClick={updateAction} className='btn-nav'>Updater</button>
@@ -119,6 +127,7 @@ const ResultPage = () => {
                     { type ==='site' && (<Update ID={tuples[currentIndex].sites_ID} type={type}></Update>)}
                     { type === 'compt' && (<Update ID={tuples[currentIndex].comp_ID} type={type}></Update>)}
                     {type === 'trnspr' && (<Update ID={tuples[currentIndex].arret_ID} type={type}></Update>)}
+                    {type === 'agenda' && (<Update ID={tuples[currentIndex].agenda_ID} type={type}></Update>)}
                 </div>
             )}
                 </div>

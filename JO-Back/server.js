@@ -99,6 +99,42 @@ server.post('/competition',(req, res)=>{
     });
 })
 
+server.post('/siteByComp' , (req , res)=>{
+    console.log("siteByComp");
+    const { id_comp} = req.body;
+    let formule ;
+        formule = `SELECT * FROM derouler JOIN competition ON derouler.id_comp = competition.comp_ID JOIN sites ON sites.sites_ID = derouler.id_site WHERE comp_ID = '${id_comp}'`
+        db.query(formule, (err, data) => {
+            if (err) {
+                console.log(err);
+                return res.status(300).json(err);
+            }
+            console.log(data);
+            return res.status(200).json({
+                data: data ,
+                type:'site'
+            });
+        });
+    
+})
+
+server.post('/date' , (req , res)=>{
+    const { id_comp} = req.body;
+    let formule ;
+        formule = `SELECT * FROM programmer JOIN competition ON programmer.compete_id = competition.comp_ID JOIN calendrier ON calendrier.agenda_ID = programmer.agenda_ID WHERE comp_ID = '${id_comp}'`
+        db.query(formule, (err, data) => {
+            if (err) {
+                console.log(err);
+                return res.status(300).json(err);
+            }
+            console.log(data);
+            return res.status(200).json({
+                data: data ,
+                type:'agenda'
+            });
+        });
+})
+
 server.post('/updateComp' , (req,res)=>{
     console.log(req.body);
     const { id, nom_comp, categorie_comp, step_comp} = req.body;
@@ -270,6 +306,23 @@ server.post('/athBysport', (req, res) => {
 })
 }
 );
+
+
+server.post('/deleteComp' , ( req , res)=>{
+    console.log('delete comp')
+    const { comp_ID }= req.body;
+    db.query(`DELETE FROM competition WHERE comp_ID = '${comp_ID}'`, (err , data)=>{
+        if( err){
+            console.log(err);
+            return res.status(400);
+        }
+        console.log("DELETED")
+        return res.status(200).json({
+            statu : "DELETED"
+        });
+    })
+
+})
 
 server.post('/sites', (req , res)=>{
     console.log(req.body);

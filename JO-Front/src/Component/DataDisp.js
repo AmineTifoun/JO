@@ -57,6 +57,29 @@ export default function DataDisp({ Data, type  }) {
             console.log(err);
         }
     }
+
+    const getSitesByComp = async ()=>{
+        try {
+            console.log("comp_ID ="+Data.comp_ID);
+            const res = await axios.post('http://localhost:3500/siteByComp', { id_comp: Data.comp_ID });
+            console.log(res.data);
+            navigate('/Results', { state: { data: res.data.data, type: res.data.type } });
+        } catch (err) {
+            console.log(err);
+        }
+        
+    }
+
+    const getDate = async ()=>{
+        try {
+            console.log("comp_ID ="+Data.comp_ID);
+            const res = await axios.post('http://localhost:3500/date', { id_comp: Data.comp_ID });
+            console.log(res.data);
+            navigate('/Results', { state: { data: res.data.data, type: res.data.type } });
+        } catch (err) {
+            console.log(err);
+        }
+    }
     useEffect(() => {
         switch (type) {
             case 'ath':
@@ -79,6 +102,8 @@ export default function DataDisp({ Data, type  }) {
                 break ;
             case 'trnspr':
                 break;
+                case 'agenda':
+                    break ;
             default:
                 alert(" ERROR SETTING VARIABLES ");
         }
@@ -136,13 +161,25 @@ export default function DataDisp({ Data, type  }) {
             )}
             { type === 'compt' && (
                 <div className="compt">
-                    <img  class ="profilePic" src={Data.img ? "http://localhost:3500/images/"+Data.img : logo} alt="Logo Sport" width={140} />
+                    <img  className ="compPic" src={Data.img ? "http://localhost:3500/images/"+Data.img : logo} alt="Logo Sport" width={140} />
                     <div className="TextContainer sites">
                         <p><span className="style">Nom Competition:</span> {Data.nom_comp}</p>
                         <p><span className="style">Catégorie:</span> {Data.categorie_comp}</p>
                         <p><span className="style">Niveau :</span> {Data.step_comp}</p>
                         <div class= 'btn-cont'>
-                        <button className="trsprt-btn sprt-btn"> Sites </button>
+                        <button className="trsprt-btn sprt-btn" onClick={getSitesByComp}> Sites </button>
+                        <button className="trsprt-btn sprt-btn" onClick={getDate}> Date </button>
+                    </div>
+                    </div>
+                </div>
+            )}
+            { type === 'agenda' && (
+                <div className="compt">
+                    <div className="TextContainer sites">
+                        <p><span className="style">Date:</span> {Data.date_deroulement}</p>
+                        <p><span className="style">Heure:</span> {Data.heure_deroulement}</p>
+                        <div class= 'btn-cont'>
+                        <button className="trsprt-btn sprt-btn" onClick={(e)=>{navigate('/Filter')}}> RETOUR VERS FILTRE </button>
                     </div>
                     </div>
                 </div>

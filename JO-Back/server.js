@@ -78,14 +78,42 @@ server.post('/sport' , (req, res)=>{
 )
 
 
-server.get('/competiton',(req, res)=>{
-    const formule = " SELECT * FROM COMPETITON "; 
+server.post('/competition',(req, res)=>{
+    console.log(req.body);
+    const { id_comp}= req.body;
+    const formule = ` SELECT * FROM abriter JOIN competition ON competition.comp_ID = abriter.id_compet JOIN sport ON sport.sport_ID = abriter.sport_id where sport.sport_ID= '${id_comp}' `; 
     db.query( formule , (err  , data)=>{
         if( err){
             return res.status(400);
         }
-        return res.json(data);
+        console.log(data);
+        return res.json({
+            data: data , 
+            type:'compt'
+        });
 
+    });
+})
+
+server.post('/updateComp' , (req,res)=>{
+    console.log(req.body);
+    const { id, nom_comp, categorie_comp, step_comp, } = req.body;
+    let formule = "UPDATE competition SET ";
+    formule += (nom_comp) ? `nom_comp = '${nom_comp}' ` : '';
+    formule += (categorie_comp) ? `categorie_comp = '${categorie_comp}' ` : '';
+    formule += (step_comp) ? `step_comp = '${step_comp}' ` : '';
+    formule += `WHERE comp_ID = '${id}'`;
+    db.query(formule, (err, data) => {
+        if (err) {
+            console.log(err);
+            res.status(300).json({
+                state: err
+            });
+        } else {
+            res.status(200).json({
+                state: "Success"
+            });
+        }
     });
 })
 
@@ -165,6 +193,53 @@ server.post('/athBysport', (req, res) => {
 })
 }
 );
+
+server.post('/updateAth', (req, res) => {
+    console.log(req.body);
+    const { id, nomAth, date_naissance, medailles, PrenomAth } = req.body;
+    let formule = "UPDATE Athletes SET ";
+    formule += (nomAth) ? `nom_ath = '${nomAth}' ` : '';
+    formule += (date_naissance) ? `date_naissance = '${date_naissance}' ` : '';
+    formule += (medailles) ? `nb_medailles = '${medailles}' ` : '';
+    formule += (PrenomAth) ? `prenom_ath = '${PrenomAth}' ` : '';
+    formule += `WHERE ath_ID = '${id}'`;
+    console.log(formule);
+    db.query(formule, (err, data) => {
+        if (err) {
+            res.status(300).json({
+                state: err
+            });
+        } else {
+            res.status(200).json({
+                state: "Success"
+            });
+        }
+    });
+});
+
+server.post('/updateSprt' , (req , res)=>{
+    const { id, nomFr, adhesion, isIndiv, nomEng } = req.body;
+    let formule = "UPDATE sport SET ";
+    formule += (nomFr) ? `nom_sport = '${nomFr}'` : '';
+    formule += (adhesion) ? `date_adhesion = '${adhesion}'` : '';
+    formule += (isIndiv) ? `isIndividual = '${isIndiv}' ` : '';
+    formule += (nomEng) ? `nom_sport_eng = '${nomEng}' ` : '';
+    formule += `WHERE sport_ID = '${id}'`;
+    console.log(formule);
+    db.query(formule, (err, data) => {
+        if (err) {
+            console.log(err);
+            res.status(300).json({
+                state: err
+            });
+        } else {
+            res.status(200).json({
+                state: "Success"
+            });
+        }
+    });
+})
+
 
 /********************** SERVER CONNEXION  *********************/
 server.listen(3500, () => {

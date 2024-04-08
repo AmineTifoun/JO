@@ -9,11 +9,15 @@ import facebook from './../Tools/facebook.png'
 import instagram from './../Tools/instagram.png'
 import twitter from './../Tools/twitter.png'
 import axios from 'axios'
+import Update from '../Component/Update';
+
 const ResultPage = () => {
     const location = useLocation();
     const [tuples, setTuples] = useState(null);
     const [type, setType] = useState("");
     const [currentIndex, setCurrentIndex] = useState(0); 
+    const [update  , setUpdate]=useState(false)
+
     useEffect(() => {
         setTuples(location.state.data);
         setType(location.state.type);
@@ -42,7 +46,7 @@ const ResultPage = () => {
     };
 
     useEffect(()=>{
-        
+
     },[tuples])
         const DeleteAction = async () => {
                 switch (type){
@@ -79,6 +83,10 @@ const ResultPage = () => {
         }
         handleDataDelete();
         };
+
+        const updateAction = ()=>{
+                setUpdate(true);
+        }
     return (
         <div className="ground">
             <img src={flags} alt='Flags' className='flags'></img>
@@ -90,7 +98,20 @@ const ResultPage = () => {
                         <DataDisp Data={tuples[currentIndex]} type={type}  />
                     )}
                 { tuples && (<div>{currentIndex+1} / {tuples.length}</div>)}
-                <button className='btn' onClick={DeleteAction}>Supprimer</button>
+                {tuples && (
+                    <div>
+                    <button  onClick={DeleteAction} className='btn-nav'>Supprimer</button>
+                    <button  onClick={updateAction} className='btn-nav'>Updater</button>
+                    </div>
+                    )}
+                {update && (
+                <div>
+                    { type ==='ath' && (<Update ID={tuples[currentIndex].ath_ID} type={type}></Update>)}
+                    { type ==='sprt' && (<Update ID={tuples[currentIndex].sport_ID} type={type}></Update>)}
+                    { type ==='ath' && (<Update ID={tuples[currentIndex].ath_ID} type={type}></Update>)}
+                    { type === 'compt' && (<Update ID={tuples[currentIndex].comp_ID} type={type}></Update>)}
+                </div>
+            )}
                 </div>
                 <div className="navigation-buttons">
                     <button onClick={goToPrevious} disabled={currentIndex === 0} className='btn-nav'>Précédent</button>

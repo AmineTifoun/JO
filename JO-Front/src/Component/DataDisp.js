@@ -23,10 +23,23 @@ export default function DataDisp({ Data, type  }) {
         return dob.toDateString(); // Convertir la date en format de chaîne lisible
     }
 
+
     const getAthbySport = async () => {
         try {
             console.log(Data.sport_ID);
             const res = await axios.post('http://localhost:3500/athBysport', { id_sport: Data.sport_ID });
+            console.log(res.data);
+            navigate('/Results', { state: { data: res.data.data, type: res.data.type } });
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+
+    const getCompetition = async () => {
+        try {
+            console.log(Data.sport_ID);
+            const res = await axios.post('http://localhost:3500/competition', { id_comp: Data.sport_ID });
             console.log(res.data);
             navigate('/Results', { state: { data: res.data.data, type: res.data.type } });
         } catch (err) {
@@ -51,6 +64,8 @@ export default function DataDisp({ Data, type  }) {
             case 'site':
                 setPhoto((Data.img != null) ? "http://localhost:3500/images/"+Data.img : site)
                 break;
+            case 'compt':
+                break ;
             default:
                 alert(" ERROR SETTING VARIABLES ");
         }
@@ -63,9 +78,9 @@ export default function DataDisp({ Data, type  }) {
                     <div className="TextContainer use">
                         <p><span className="style">Nom :</span> {Data.nom_ath}</p>
                         <p><span className="style">Prénom :</span> {Data.prenom_ath}</p>
-                        <p><span className="style">Date de Naissance :</span> {date_naisse}</p> {/* Afficher la date de naissance ici */}
+                        <p><span className="style">Date de Naissance :</span> {(Data.date_naissance)?Data.date_naissance.slice(0 , 10 ) :date_naisse}</p> {/* Afficher la date de naissance ici */}
                         <p><span className="style">Nationalité :</span>       {Data.nationalite}</p>
-                        <p><span className="style">Nombre de Médailles :</span> {randomNumber}</p>
+                        <p><span className="style">Nombre de Médailles :</span> {(Data.nb_medailles)?Data.nb_medailles : randomNumber}</p>
                         
                     </div>
                     <div class="img-con">
@@ -86,7 +101,7 @@ export default function DataDisp({ Data, type  }) {
                     </div>
                     <div class= 'btn-cont'>
                         <button className="sprt-btn" onClick={getAthbySport}> Athletes </button>
-                        <button className="sprt-btn"> Competitions</button>
+                        <button className="sprt-btn" onClick={getCompetition}> Competitions</button>
                     </div>
                 </div>
             )}
@@ -102,6 +117,19 @@ export default function DataDisp({ Data, type  }) {
                     </div>
                     <div class= 'btn-cont'>
                         <button className="trsprt-btn sprt-btn"> Transports </button>
+                    </div>
+                </div>
+            )}
+            { type === 'compt' && (
+                <div className="compt">
+                    <img  class ="profilePic" src={Data.img ? "http://localhost:3500/images/"+Data.img : logo} alt="Logo Sport" width={140} />
+                    <div className="TextContainer sites">
+                        <p><span className="style">Nom Competition:</span> {Data.nom_comp}</p>
+                        <p><span className="style">Catégorie:</span> {Data.categorie_comp}</p>
+                        <p><span className="style">Niveau :</span> {Data.step_comp}</p>
+                        <div class= 'btn-cont'>
+                        <button className="trsprt-btn sprt-btn"> Sites </button>
+                    </div>
                     </div>
                 </div>
             )}
